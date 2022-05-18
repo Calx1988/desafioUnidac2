@@ -6,8 +6,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import desafio_unidac_sb.entities.Employee;
 import desafio_unidac_sb.repositories.EmployeeRepository;
 
 @Controller
@@ -25,6 +27,11 @@ public class EmployeeResource {
 	public String employees(Model model) {
 		model.addAttribute("listEmployees", employeeRepository.findAll());
 		return "employees";
+	}
+	
+	@GetMapping(value="/newEmployee")
+	public String newEmployee(@ModelAttribute("employee") Employee employee) {
+		return "newEmployee";
 	}
 	
 	

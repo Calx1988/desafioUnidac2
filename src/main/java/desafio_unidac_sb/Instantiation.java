@@ -28,10 +28,14 @@ public class Instantiation implements CommandLineRunner{
 
 		Recipe r1 = new Recipe(null, "Torta de Morango");
 		Recipe r2 = new Recipe(null, "Pastel de Carne");
+		Recipe r3 = new Recipe(null, "Torta de Chocolate");
+		Recipe r4 = new Recipe(null, "Risólis de Frango");
 		
 		employeeRepository.saveAll(Arrays.asList(e1,e2));
-		recipeRepository.saveAll(Arrays.asList(r1,r2));
+		recipeRepository.saveAll(Arrays.asList(r1,r2,r3,r4));
 		
+		e1.getlRecipe().addAll(Arrays.asList(r1,r2));
+		e2.getlRecipe().addAll(Arrays.asList(r3,r4));
 		
 	}
 	
