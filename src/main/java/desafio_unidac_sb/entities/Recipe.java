@@ -15,22 +15,22 @@ public class Recipe implements Serializable{
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 
-	private String id;
+	private Long id;
 	private String name;
 	
 	public Recipe() {
 	}
 
-	public Recipe(String id, String name) {
+	public Recipe(Long id, String name) {
 		this.id = id;
 		this.name = name;
 	}
 
-	public String getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(String id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 

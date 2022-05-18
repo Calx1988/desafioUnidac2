@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+<meta charset="UTF-8" />
+<title>Desafio Unidac</title>
+
+<!-- CSS only -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" 
+		rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" 
+		crossorigin="anonymous">
+
+
+
+</head>
+<body>
+	<div class="container my-2">
+		<a th:href="@{/recipes/newRecipe}" class="btn btn-primary btn-sm mb-3">Cadastrar Lanche</a>
+		<h1>Recipes</h1>
+		<table border="1" class="table table-striped table-responsive-md">
+			<thead>
+				<tr>
+					<th>Nome</th>
+					<th>Ações</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="recipe : ${listRecipes}">
+					<td th:text="${recipe.name}"></td>
+					<td>
+						<a th:href="@{/recipes/{id}(id=${recipe.id})}" class="btn btn-primary">Alterar</a>
+						<a th:href="@{/recipes/excluir/{id}(id=${recipe.id})}" class="btn btn-danger">Excluir</a>			
+					</td>
+				</tr>
+			</tbody>
+		</table>
+		<nav aria-label="...">
+		    <ul class="pagination">
+			    <li th:if="${listRecipes.totalPages > 0}" th:each="numeroPagina : ${numerosPaginas}" 
+			    	th:class="${numeroPagina==listRecipes.number + 1} ? 'page-item active' : 'page-item'">
+			    	<a class="page-link" th:href="@{/recipes(size=${listRecipes.size}, page=${numeroPagina})}"
+			        th:text=${numeroPagina}></a>
+			    </li>
+		    </ul>
+		</nav>
+	</div>
+</body>
+</html>

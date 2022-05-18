@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+<meta charset="UTF-8" />
+<title>Desafio Unidac</title>
+
+<!-- CSS only -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" 
+		rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" 
+		crossorigin="anonymous">
+
+
+
+</head>
+<body>
+	<div class="container my-2">
+		<a th:href="@{/employees/nova}" class="btn btn-primary btn-sm mb-3">Cadastrar Colaborador</a>
+		<h1>Colaborador</h1>
+		<table border="1" class="table table-striped table-responsive-md">
+			<thead>
+				<tr>
+					<th>Nome</th>
+					<th>CPF</th>
+					<th>Ações</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="employee : ${listEmployees}">
+					<td th:text="${employee.name}"></td>
+					<td th:text="${employee.cpf}"></td>
+					<td>
+						<a th:href="@{/employees/{id}(id=${employee.id})}" class="btn btn-primary">Alterar</a>
+						<a th:href="@{/employees/excluir/{id}(id=${employee.id})}" class="btn btn-danger">Excluir</a>			
+					</td>
+					<td>
+						
+						<a th:href="@{/employees/{id}(id=${employee.id})}" class="btn btn-primary">Adicionar Lanche</a>
+						<a th:href="@{/employees/excluir/{id}(id=${employee.id})}" class="btn btn-danger">Remover Lanche</a>			
+					</td>
+				</tr>
+			</tbody>
+		</table>
+		<nav aria-label="...">
+		    <ul class="pagination">
+			    <li th:if="${listEmployees.totalPages > 0}" th:each="numeroPagina : ${numerosPaginas}" 
+			    	th:class="${numeroPagina==listEmployees.number + 1} ? 'page-item active' : 'page-item'">
+			    	<a class="page-link" th:href="@{/employees(size=${listEmployees.size}, page=${numeroPagina})}"
+			        th:text=${numeroPagina}></a>
+			    </li>
+		    </ul>
+		</nav>
+	</div>
+</body>
+</html>

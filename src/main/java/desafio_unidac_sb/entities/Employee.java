@@ -1,14 +1,15 @@
 package desafio_unidac_sb.entities;
 
 import java.io.Serializable;
-import java.util.HashSet;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
-import java.util.Set;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Transient;
 
 @Entity
 public class Employee implements Serializable{
@@ -16,27 +17,27 @@ public class Employee implements Serializable{
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private String id;
+	private Long id;
 	private String name;
 	private String cpf;
 	
-	
-	private Set<Recipe> lRecipe = new HashSet<>();
+	@Transient
+	private List<Recipe> lRecipe = new ArrayList<>();
 	
 	public Employee() {
 	}
 
-	public Employee(String id, String name, String cpf) {
+	public Employee(Long id, String name, String cpf) {
 		this.id = id;
 		this.name = name;
 		this.cpf = cpf;
 	}
 
-	public String getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(String id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
@@ -56,13 +57,10 @@ public class Employee implements Serializable{
 		this.cpf = cpf;
 	}
 	
-	public Set<Recipe> getlRecipe() {
+	public List<Recipe> getlRecipe() {
 		return lRecipe;
 	}
 	
-	public void setlRecipe() {
-		this.lRecipe =  lRecipe;
-	}
 
 	@Override
 	public int hashCode() {
