@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import desafio_unidac_sb.entities.Recipe;
+import desafio_unidac_sb.repositories.EmployeeRepository;
 import desafio_unidac_sb.repositories.RecipeRepository;
 
 @Controller
@@ -21,8 +22,12 @@ public class RecipeResource {
 	@Autowired
 	private RecipeRepository recipeRepository;
 	
-	public RecipeResource(RecipeRepository recipeRepository) {
+	@Autowired
+	private EmployeeRepository employeeRepository;
+	
+	public RecipeResource(RecipeRepository recipeRepository, EmployeeRepository employeeRepository) {
 		this.recipeRepository = recipeRepository;
+		this.employeeRepository = employeeRepository;
 	}
 	
 	@GetMapping(value = "/recipes")
@@ -32,21 +37,28 @@ public class RecipeResource {
 	}
 	
 	@GetMapping(value="/newRecipe")
-	public String newRecipe(@ModelAttribute("recipe") Recipe recipe) {
+	public String newRecipe(Model model) {
+		model.addAttribute("recipe", new Recipe());
+		model.addAttribute("employees", employeeRepository.findAll());
 		return "newRecipe";
 	}
 	
 	@PostMapping(value ="/recipes/saveRecipe")
-	public String saveEmployee(@ModelAttribute("recipe") Recipe recipe) {
+	public String saveRecipe(@ModelAttribute("recipe") Recipe recipe, Model model) {
 		List<Recipe> list = recipeRepository.findAll();
 		for(Recipe x: list) {
 			if(x.hashCode()==recipe.hashCode()) {
 				return "newRecipe";  
 			}
 		}
+		model.addAttribute("recipe", recipe);
+		model.addAttribute("employees", employeeRepository.findAll());
 		recipeRepository.save(recipe);
+		employeeRepository.flush();
 		return "redirect:/recipes";		
 	}
+	
+	
 
 
 }

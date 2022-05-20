@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import desafio_unidac_sb.entities.Employee;
 import desafio_unidac_sb.repositories.EmployeeRepository;
+import desafio_unidac_sb.repositories.RecipeRepository;
 
 @Controller
 @Transactional
@@ -23,6 +24,9 @@ public class EmployeeResource {
 	@Autowired
 	private EmployeeRepository employeeRepository;
 	
+	@Autowired
+	private RecipeRepository recipeRepository;
+	
 	public EmployeeResource(EmployeeRepository employeeRepository) {
 		this.employeeRepository = employeeRepository;
 	}
@@ -30,6 +34,7 @@ public class EmployeeResource {
 	@GetMapping(value = "/employees")
 	public String employees(Model model) {
 		model.addAttribute("listEmployees", employeeRepository.findAll());
+		model.addAttribute("recipes", recipeRepository.findAll());
 		return "employees";
 	}
 	

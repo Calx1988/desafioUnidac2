@@ -1,6 +1,8 @@
 package desafio_unidac_sb;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -40,6 +42,9 @@ public class Instantiation implements CommandLineRunner{
 		r4.setEmployee(e2);
 		
 		recipeRepository.saveAll(Arrays.asList(r1,r2,r3,r4));
+		
+		List<Employee> listEmployee = new ArrayList<>();
+		listEmployee.addAll(employeeRepository.findAll());
 	}
 	
 
