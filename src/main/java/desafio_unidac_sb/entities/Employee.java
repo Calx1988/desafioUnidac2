@@ -11,7 +11,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
-import javax.persistence.Transient;
 
 @Entity
 public class Employee implements Serializable{
@@ -23,7 +22,7 @@ public class Employee implements Serializable{
 	private String name;
 	private String cpf;
 	
-	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "employee")
+	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = false, mappedBy = "employee")
 	private List<Recipe> lRecipe = new ArrayList<>();
 	
 	public Employee() {

@@ -1,6 +1,7 @@
 package desafio_unidac_sb.resources;
 
 import java.util.List;
+import java.util.Optional;
 
 import javax.transaction.Transactional;
 
@@ -9,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import desafio_unidac_sb.entities.Employee;
@@ -48,7 +50,19 @@ public class EmployeeResource {
 		return "redirect:/employees";		
 	}
 	
-
+	@GetMapping("employees/editEmployee/{id}")
+	public String editEmployee(@PathVariable("id") long id, Model model) {
+		Optional<Employee> employeeOpt = employeeRepository.findById(id);
+		model.addAttribute("employee", employeeOpt.get());
+		return "newEmployee";
+	}
+	
+	@GetMapping("employees/deleteEmployee/{id}")
+	public String deleteEmployee(@PathVariable("id") long id) {
+		Optional<Employee> employeeOpt = employeeRepository.findById(id);
+		employeeRepository.delete(employeeOpt.get());
+		return "redirect:/employees";
+	}
 	
 
 }

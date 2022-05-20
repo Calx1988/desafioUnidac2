@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
-import desafio_unidac_sb.entities.Employee;
 import desafio_unidac_sb.entities.Recipe;
 import desafio_unidac_sb.repositories.RecipeRepository;
 

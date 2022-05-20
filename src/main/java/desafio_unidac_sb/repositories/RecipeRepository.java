@@ -6,7 +6,7 @@ import org.springframework.stereotype.Repository;
 import desafio_unidac_sb.entities.Recipe;
 
 @Repository
-public interface RecipeRepository extends JpaRepository<Recipe, String>{
+public interface RecipeRepository extends JpaRepository<Recipe, Long>{
 	
 
 }
