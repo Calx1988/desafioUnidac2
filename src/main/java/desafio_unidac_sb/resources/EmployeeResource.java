@@ -1,5 +1,7 @@
 package desafio_unidac_sb.resources;
 
+import java.util.List;
+
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,7 +36,19 @@ public class EmployeeResource {
 		return "newEmployee";
 	}
 	
+	@PostMapping(value ="/employees/saveEmployee")
+	public String saveEmployee(@ModelAttribute("employee") Employee employee) {
+		List<Employee> list = employeeRepository.findAll();
+		for(Employee x: list) {
+			if(x.hashCode()==employee.hashCode()) {
+				return "newEmployee";  
+			}
+		}
+		employeeRepository.save(employee);
+		return "redirect:/employees";		
+	}
 	
+
 	
 
 }

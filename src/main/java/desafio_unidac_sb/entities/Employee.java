@@ -5,10 +5,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Transient;
 
 @Entity
@@ -21,7 +23,7 @@ public class Employee implements Serializable{
 	private String name;
 	private String cpf;
 	
-	@Transient
+	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "employee")
 	private List<Recipe> lRecipe = new ArrayList<>();
 	
 	public Employee() {
@@ -64,7 +66,7 @@ public class Employee implements Serializable{
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(cpf, id);
+		return Objects.hash(cpf);
 	}
 
 	@Override
@@ -76,6 +78,8 @@ public class Employee implements Serializable{
 		if (getClass() != obj.getClass())
 			return false;
 		Employee other = (Employee) obj;
-		return Objects.equals(cpf, other.cpf) && Objects.equals(id, other.id);
+		return Objects.equals(cpf, other.cpf);
 	}
+	
+	
 }

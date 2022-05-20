@@ -7,6 +7,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 @Entity
 public class Recipe implements Serializable{
@@ -17,6 +19,9 @@ public class Recipe implements Serializable{
 
 	private Long id;
 	private String name;
+	
+	@ManyToOne
+    private Employee employee;
 	
 	public Recipe() {
 	}
@@ -41,10 +46,19 @@ public class Recipe implements Serializable{
 	public void setName(String name) {
 		this.name = name;
 	}
+	
+	public Employee getEmployee() {
+		return employee;
+	}
+
+	public void setEmployee(Employee employee) {
+		this.employee = employee;
+	}
+
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(id, name);
+		return Objects.hash(name);
 	}
 
 	@Override
@@ -56,6 +70,13 @@ public class Recipe implements Serializable{
 		if (getClass() != obj.getClass())
 			return false;
 		Recipe other = (Recipe) obj;
-		return Objects.equals(id, other.id) && Objects.equals(name, other.name);
+		return Objects.equals(name, other.name);
 	}
+
+	@Override
+	public String toString() {
+		return name;
+	}
+	
+	
 }

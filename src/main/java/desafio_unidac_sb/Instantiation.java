@@ -34,9 +34,12 @@ public class Instantiation implements CommandLineRunner{
 		employeeRepository.saveAll(Arrays.asList(e1,e2));
 		recipeRepository.saveAll(Arrays.asList(r1,r2,r3,r4));
 		
-		e1.getlRecipe().addAll(Arrays.asList(r1,r2));
-		e2.getlRecipe().addAll(Arrays.asList(r3,r4));
+		r1.setEmployee(e2);
+		r2.setEmployee(e1);
+		r3.setEmployee(e2);
+		r4.setEmployee(e2);
 		
+		recipeRepository.saveAll(Arrays.asList(r1,r2,r3,r4));
 	}
 	
 

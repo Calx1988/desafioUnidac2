@@ -12,11 +12,10 @@
 <body>
 	<div class="container my-2">
 		<hr>
-		<h2>Editar Colaborador</h2>
-		<form action="#" th:action="@{/employees/saveEmployee}" th:object="${employee}" method="POST">
+		<h2>Receita</h2>
+		<form action="#" th:action="@{/recipes/saveRecipe}" th:object="${recipe}" method="POST">
 			<input type="hidden" id="id" th:field="*{id}">
 			<input type="text" th:field="*{name}" placeholder="Nome" class="form-control mb-4 col-4">
-      		<input type="text" th:field="*{cpf}" placeholder="CPF" class="form-control mb-4 col-4">
 
 			<button type="submit" class="btn btn-info col-2">Salvar</button>
 		</form>
