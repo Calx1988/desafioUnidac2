@@ -12,8 +12,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import desafio_unidac_sb.entities.Employee;
+import desafio_unidac_sb.entities.Recipe;
 import desafio_unidac_sb.repositories.EmployeeRepository;
 import desafio_unidac_sb.repositories.RecipeRepository;
 
@@ -31,10 +34,15 @@ public class EmployeeResource {
 		this.employeeRepository = employeeRepository;
 	}
 	
+	@GetMapping(value="/employees/{id}")
+	public Employee findById(Long id) {
+		Employee employee = employeeRepository.findById(id).get();
+		return employee;
+	}
+	
 	@GetMapping(value = "/employees")
 	public String employees(Model model) {
 		model.addAttribute("listEmployees", employeeRepository.findAll());
-		model.addAttribute("recipes", recipeRepository.findAll());
 		return "employees";
 	}
 	
@@ -55,7 +63,7 @@ public class EmployeeResource {
 		return "redirect:/employees";		
 	}
 	
-	@GetMapping("employees/editEmployee/{id}")
+	@PutMapping("employees/editEmployee/{id}")
 	public String editEmployee(@PathVariable("id") long id, Model model) {
 		Optional<Employee> employeeOpt = employeeRepository.findById(id);
 		model.addAttribute("employee", employeeOpt.get());
@@ -64,10 +72,29 @@ public class EmployeeResource {
 	
 	@GetMapping("employees/deleteEmployee/{id}")
 	public String deleteEmployee(@PathVariable("id") long id) {
-		Optional<Employee> employeeOpt = employeeRepository.findById(id);
-		employeeRepository.delete(employeeOpt.get());
+		Employee employee = employeeRepository.findById(id).get();
+		employeeRepository.delete(employee);
 		return "redirect:/employees";
 	}
 	
+	@GetMapping("employees/addRecipe/{id}")
+	public String addRecipe(@PathVariable("id") long id, Model model) {
+		List<Recipe> listRecipe = recipeRepository.findAll();
+		model.addAttribute("listRecipe", listRecipe);
+		Employee employee = employeeRepository.findById(id).get();
+		model.addAttribute("employee", employee);
+		return "addRecipe";
+	}
+	
+	@PutMapping("employees/addRecipe/{id}/save")
+	public String saveRecipeEmployee(@PathVariable ("id") Long id, Model model, @ModelAttribute ("recipe") Recipe recipe) {
+		Employee employee = employeeRepository.findById(id).get();
+		recipe = recipeRepository.findById(id).get();
+		employee.setRecipe(recipe);
+		recipe.setEmployee(employee);
+		employeeRepository.save(employee);
+		recipeRepository.save(recipe);
+		return "employees";
+	}
 
 }

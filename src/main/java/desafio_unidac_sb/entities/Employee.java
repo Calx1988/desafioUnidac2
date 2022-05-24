@@ -1,16 +1,14 @@
 package desafio_unidac_sb.entities;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 
 @Entity
 public class Employee implements Serializable{
@@ -22,8 +20,9 @@ public class Employee implements Serializable{
 	private String name;
 	private String cpf;
 	
-	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = false, mappedBy = "employee")
-	private List<Recipe> lRecipe = new ArrayList<>();
+	@OneToOne
+	@JoinColumn(name="recipe_id", referencedColumnName = "id")
+	private Recipe recipe;
 	
 	public Employee() {
 	}
@@ -58,8 +57,12 @@ public class Employee implements Serializable{
 		this.cpf = cpf;
 	}
 	
-	public List<Recipe> getlRecipe() {
-		return lRecipe;
+	public Recipe getRecipe() {
+		return recipe;
+	}
+	
+	public void setRecipe(Recipe recipe) {
+		this.recipe = recipe;
 	}
 	
 

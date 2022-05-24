@@ -1,26 +1,28 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
-<meta charset="UTF-8">
-<title>Desafio Unidac</title>
-
-<link rel="stylesheet"
-	href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
-	integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z"
-	crossorigin="anonymous">
+	<meta charset="UTF-8" />
+	<script type="text/javascript" src="webjars/jquery/3.3.1/jquery.min.js"></script>
+	<!-- JavaScript Bundle with Popper -->
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" 
+				integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous">
+	</script>
+	<title>Desafio Unidac</title>
+	
+	<!-- CSS only -->
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" 
+			rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" 
+			crossorigin="anonymous">
 </head>
 <body>
 	<div class="container my-2">
-		<hr>
-		<h2>Receita</h2>
-		<form action="#" th:action="@{/recipes/saveRecipe}" th:object="${recipe}" method="POST">
-			<input type="hidden" id="id" th:field="*{id}">
-			<input type="text" th:field="*{name}" placeholder="Nome" class="form-control mb-4 col-4">
-
-			<button type="submit" class="btn btn-info col-2">Salvar</button>
-		</form>
-		<hr>
-		<a th:href="@{/employees}">Retornar para a Home</a>
+	<form action="#" th:action="@{employees/addRecipe/{id}/save}" th:object="${employee}" method="GET">
+		<select class="form-control">
+		    <option value="0">Selecione o lanche</option>
+		    <option th:each="recipe : ${listRecipe}" th:value="${recipe.id}" th:text="${recipe.name}"></option>
+		</select>
+		<a th:href="@{/employees/addRecipe/{id}/save}" class="btn btn-primary btn-sm">Salvar</a>		
+		<a th:href=@{/employees}>Retornar</a>
 	</div>
 </body>
 </html>

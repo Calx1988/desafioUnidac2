@@ -25,26 +25,18 @@ public class Instantiation implements CommandLineRunner{
 	@Override
 	public void run(String... args) throws Exception {
 		
-		Employee e1 = new Employee(null, "cassio correa", "12345");
-		Employee e2 = new Employee(null, "allana correa", "23456");
-
-		Recipe r1 = new Recipe(null, "Torta de Morango");
-		Recipe r2 = new Recipe(null, "Pastel de Carne");
-		Recipe r3 = new Recipe(null, "Torta de Chocolate");
-		Recipe r4 = new Recipe(null, "Risólis de Frango");
+		Employee e1 = new Employee(null, "Cássio Corrêa", "12345");
+		Employee e2 = new Employee(null, "Allana Caroline", "23456");
 		
 		employeeRepository.saveAll(Arrays.asList(e1,e2));
-		recipeRepository.saveAll(Arrays.asList(r1,r2,r3,r4));
 		
-		r1.setEmployee(e2);
-		r2.setEmployee(e1);
-		r3.setEmployee(e2);
-		r4.setEmployee(e2);
-		
-		recipeRepository.saveAll(Arrays.asList(r1,r2,r3,r4));
-		
-		List<Employee> listEmployee = new ArrayList<>();
-		listEmployee.addAll(employeeRepository.findAll());
+		Recipe r1 = new Recipe(null, "Torta de Chocolate");
+		Recipe r2 = new Recipe(null, "Torta de Morango");
+		Recipe r3 = new Recipe(null, "Croissant");
+
+		recipeRepository.saveAll(Arrays.asList(r1,r2,r3));
+
+				
 	}
 	
 

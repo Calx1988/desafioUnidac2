@@ -1,16 +1,18 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
-<meta charset="UTF-8" />
-<title>Desafio Unidac</title>
-
-<!-- CSS only -->
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" 
-		rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" 
-		crossorigin="anonymous">
-
-
-
+	<meta charset="UTF-8" />
+	<script type="text/javascript" src="webjars/jquery/3.3.1/jquery.min.js"></script>
+	<!-- JavaScript Bundle with Popper -->
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" 
+				integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous">
+	</script>
+	<title>Desafio Unidac</title>
+	
+	<!-- CSS only -->
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" 
+			rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" 
+			crossorigin="anonymous">
 </head>
 <body>
 	<div class="container my-2">
@@ -22,8 +24,19 @@
 				<tr>
 					<th>Nome</th>
 					<th>CPF</th>
-					<th></th>
-					<th>Lanches</th>
+					<th>Ações</th>
+					<th>Lanche</th>
+					//
+					<button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bd-example-modal-sm">Small modal</button>
+
+					<div class="modal fade bd-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+					  <div class="modal-dialog modal-sm">
+					    <div class="modal-content">
+					      ...
+					    </div>
+					  </div>
+					</div>
+					//
 					
 				</tr>
 			</thead>
@@ -32,13 +45,13 @@
 					<td th:text="${employee.name}"></td>
 					<td th:text="${employee.cpf}"></td>
 					<td>
-						<a th:href="@{/employees/{id}(id=${employee.id})}" class="btn btn-primary btn-sm">Alterar</a>
-						<a th:href="@{/employees/excluir/{id}(id=${employee.id})}" class="btn btn-danger btn-sm">Excluir</a>			
+						<a th:href="@{/employees/editEmployee/{id}(id=${employee.id})}" class="btn btn-primary btn-sm">Alterar</a>
+						<a th:href="@{/employees/deleteEmployee/{id}(id=${employee.id})}" class="btn btn-danger btn-sm">Excluir</a>			
 					</td>
-					<td th:text="${employee.lRecipe.toString}"></td>
+					<td th:text="${employee.recipe}"></td>
 					<td>
-						<a th:href="@{/employees/{id}(id=${employee.id})}" class="btn btn-primary btn-sm">Adicionar Lanche</a>
-						<a th:href="@{/employees/excluir/{id}(id=${employee.id})}" class="btn btn-danger btn-sm">Remover Lanche</a>			
+						<a th:href="@{/employees/addRecipe/{id}(id=${employee.id})}" class="btn btn-primary btn-sm">Adicionar</a>		
+						<a th:href="@{/employees/removeRecipe/{id}(id=${employee.id})}" class="btn btn-danger btn-sm">Remover</a>
 					</td>
 				</tr>
 			</tbody>

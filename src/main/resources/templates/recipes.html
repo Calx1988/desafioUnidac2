@@ -29,7 +29,7 @@
 					<td th:text="${recipe.name}"></td>
 					<td>
 						<a th:href="@{/recipes/{id}(id=${recipe.id})}" class="btn btn-primary">Alterar</a>
-						<a th:href="@{/recipes/excluir/{id}(id=${recipe.id})}" class="btn btn-danger">Excluir</a>			
+						<a th:href="@{/recipes/deleteRecipe/{id}(id=${recipe.id})}" class="btn btn-danger">Excluir</a>			
 					</td>
 				</tr>
 			</tbody>
