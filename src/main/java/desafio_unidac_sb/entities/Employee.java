@@ -9,6 +9,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 
 @Entity
 public class Employee implements Serializable{
@@ -17,7 +19,12 @@ public class Employee implements Serializable{
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
+	
+	@NotBlank(message="O nome precisa ser preenchido.")
 	private String name;
+	
+	@NotBlank(message="O CPF precisa ser preenchido.")
+	@Size(min = 11, max=11, message="O CPF necessita ter 11 dígitos.")
 	private String cpf;
 	
 	@OneToOne

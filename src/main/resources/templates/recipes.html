@@ -19,6 +19,7 @@
 		<h1>Lanches</h1>
 		<table border="1" class="table table-striped table-responsive-md">
 			<thead>
+				<tr><span th:if="${recipeBeingUsed}" class="text-danger">Não é possível excluir o lanche, pois o mesmo está registrado para um colaborador</span></tr>
 				<tr>
 					<th>Nome</th>
 					<th>Ações</th>
@@ -28,7 +29,7 @@
 				<tr th:each="recipe : ${listRecipes}">
 					<td th:text="${recipe.name}"></td>
 					<td>
-						<a th:href="@{/recipes/{id}(id=${recipe.id})}" class="btn btn-primary">Alterar</a>
+						<a th:href="@{/recipes/editRecipe/{id}(id=${recipe.id})}" class="btn btn-primary">Alterar</a>
 						<a th:href="@{/recipes/deleteRecipe/{id}(id=${recipe.id})}" class="btn btn-danger">Excluir</a>			
 					</td>
 				</tr>

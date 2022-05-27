@@ -15,11 +15,13 @@
 		<h2>Receita</h2>
 		<form action="#" th:action="@{/newRecipe/saveRecipe}" th:object="${recipe}" method="POST">
 			<input type="hidden" id="id" th:field="*{id}">
+			<span th:if="${#fields.hasErrors('name')}" th:errors="*{name}" class="text-danger"></span>
+			<span th:if="${recipeAlreadyExists}" class="text-danger">Erro! Lanche já cadastrado.</span>
 			<input type="text" th:field="*{name}" placeholder="Nome" class="form-control mb-4 col-4">
 			<button type="submit" class="btn btn-info col-2">Salvar</button>
 		</form>
 		<hr>
-		<a th:href="@{/employees}">Retornar para a Home</a>
+		<a th:href="@{/recipes}">Retornar para a Home</a>
 	</div>
 </body>
 </html>

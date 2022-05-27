@@ -5,10 +5,12 @@ import java.util.List;
 import java.util.Optional;
 
 import javax.transaction.Transactional;
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -65,11 +67,43 @@ public class EmployeeResource {
 	}
 	
 	@PostMapping(value ="/employees/saveEmployee")
-	public String saveEmployee(@ModelAttribute("employee") Employee employee) {
+	public String saveEmployee(@Valid @ModelAttribute("employee") Employee employee, BindingResult bidingResult, Model model) {
+		if(bidingResult.hasErrors()) {
+			List<Recipe> listRecipe = recipeRepository.findAll();
+			List<Employee> listEmployees = employeeRepository.findAll();
+			List<Recipe> usedRecipes = new ArrayList<Recipe>();
+			for(Recipe recipe: listRecipe) {
+				for(Employee e: listEmployees) {
+					if(e.getRecipe()==recipe) {
+						usedRecipes.add(recipe);
+					}
+				}			
+			}
+			List<Recipe> notUsedRecipes= listRecipe;
+			notUsedRecipes.removeAll(usedRecipes);
+			model.addAttribute("notUsedRecipes", notUsedRecipes);
+			return "newEmployee";
+		}
+		
 		List<Employee> listEmployee = employeeRepository.findAll();
 		for(Employee e: listEmployee) {
 			if(e.getId()!=employee.getId() && e.hashCode()==employee.hashCode()) {
-				return "redirect:/newEmployee";
+				boolean cpfAlreadyExists = true;
+				model.addAttribute("cpfAlreadyExists", cpfAlreadyExists);
+				List<Recipe> listRecipe = recipeRepository.findAll();
+				List<Employee> listEmployees = employeeRepository.findAll();
+				List<Recipe> usedRecipes = new ArrayList<Recipe>();
+				for(Recipe recipe: listRecipe) {
+					for(Employee x: listEmployees) {
+						if(x.getRecipe()==recipe) {
+							usedRecipes.add(recipe);
+						}
+					}			
+				}
+				List<Recipe> notUsedRecipes= listRecipe;
+				notUsedRecipes.removeAll(usedRecipes);
+				model.addAttribute("notUsedRecipes", notUsedRecipes);
+				return "newEmployee";
 			}
 		}
 		employeeRepository.save(employee);
