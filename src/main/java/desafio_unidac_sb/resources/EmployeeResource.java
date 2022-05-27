@@ -50,7 +50,7 @@ public class EmployeeResource {
 	public String newEmployee(@ModelAttribute("employee") Employee employee, Model model) {
 		List<Recipe> listRecipe = recipeRepository.findAll();
 		List<Employee> listEmployees = employeeRepository.findAll();
-		List<Recipe> usedRecipes = new ArrayList<>();
+		List<Recipe> usedRecipes = new ArrayList<Recipe>();
 		for(Recipe recipe: listRecipe) {
 			for(Employee e: listEmployees) {
 				if(e.getRecipe()==recipe) {
@@ -81,7 +81,7 @@ public class EmployeeResource {
 		Optional<Employee> employeeOpt = employeeRepository.findById(id);
 		List<Recipe> listRecipe = recipeRepository.findAll();
 		List<Employee> listEmployees = employeeRepository.findAll();
-		List<Recipe> usedRecipes = new ArrayList<>();
+		List<Recipe> usedRecipes = new ArrayList<Recipe>();
 		for(Recipe recipe: listRecipe) {
 			for(Employee e: listEmployees) {
 				if(e.getRecipe()==recipe) {

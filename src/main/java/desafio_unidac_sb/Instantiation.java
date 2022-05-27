@@ -20,7 +20,6 @@ public class Instantiation implements CommandLineRunner{
 	@Autowired
 	private RecipeRepository recipeRepository;
 
-	@Override
 	public void run(String... args) throws Exception {
 		
 		Employee e1 = new Employee(null, "Cássio Alexsander", "12345");
