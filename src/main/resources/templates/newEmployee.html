@@ -17,7 +17,10 @@
 			<input type="hidden" id="id" th:field="*{id}">
 			<input type="text" th:field="*{name}" placeholder="Nome" class="form-control mb-4 col-4">
       		<input type="text" th:field="*{cpf}" placeholder="CPF" class="form-control mb-4 col-4">
-
+      		<select th:field="*{recipe}" class="form-control">
+			    <option value="0">Selecione/Remova o lanche</option>
+			    <option th:each="recipe : ${notUsedRecipes}" th:value="${recipe.id}" th:text="${recipe.name}"></option>
+			</select>
 			<button type="submit" class="btn btn-info col-2">Salvar</button>
 		</form>
 		<hr>

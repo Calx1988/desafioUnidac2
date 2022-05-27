@@ -16,13 +16,14 @@
 </head>
 <body>
 	<div class="container my-2">
-	<form action="#" th:action="@{employees/addRecipe/{id}/save}" th:object="${employee}" method="GET">
+	<form action="#" th:action="@{{id}(id=*{employee.id.toLong})/save}" th:object="${recipe}" method="GET">
 		<select class="form-control">
 		    <option value="0">Selecione o lanche</option>
 		    <option th:each="recipe : ${listRecipe}" th:value="${recipe.id}" th:text="${recipe.name}"></option>
 		</select>
-		<a th:href="@{/employees/addRecipe/{id}/save}" class="btn btn-primary btn-sm">Salvar</a>		
+        <button class="btn btn-primary btn-sm" type="submit">Enviar</button>
 		<a th:href=@{/employees}>Retornar</a>
+	</form>
 	</div>
 </body>
 </html>

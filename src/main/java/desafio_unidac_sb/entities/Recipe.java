@@ -18,10 +18,7 @@ public class Recipe implements Serializable{
 
 	private Long id;
 	private String name;
-	
-	@OneToOne
-    private Employee employee;
-	
+		
 	public Recipe() {
 	}
 
@@ -45,15 +42,6 @@ public class Recipe implements Serializable{
 	public void setName(String name) {
 		this.name = name;
 	}
-	
-	public Employee getEmployee() {
-		return employee;
-	}
-
-	public void setEmployee(Employee employee) {
-		this.employee = employee;
-	}
-
 
 	@Override
 	public int hashCode() {

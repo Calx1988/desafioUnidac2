@@ -1,5 +1,8 @@
 package desafio_unidac_sb.resources;
 
+import java.io.Console;
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
 
@@ -13,6 +16,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import desafio_unidac_sb.entities.Employee;
@@ -47,54 +52,64 @@ public class EmployeeResource {
 	}
 	
 	@GetMapping(value="/newEmployee")
-	public String newEmployee(@ModelAttribute("employee") Employee employee) {
+	public String newEmployee(@ModelAttribute("employee") Employee employee, Model model) {
+		List<Recipe> listRecipe = recipeRepository.findAll();
+		List<Employee> listEmployees = employeeRepository.findAll();
+		List<Recipe> usedRecipes = new ArrayList<>();
+		for(Recipe recipe: listRecipe) {
+			for(Employee e: listEmployees) {
+				if(e.getRecipe()==recipe) {
+					usedRecipes.add(recipe);
+				}
+			}			
+		}
+		List<Recipe> notUsedRecipes= listRecipe;
+		notUsedRecipes.removeAll(usedRecipes);
+		model.addAttribute("notUsedRecipes", notUsedRecipes);
 		return "newEmployee";
 	}
 	
 	@PostMapping(value ="/employees/saveEmployee")
 	public String saveEmployee(@ModelAttribute("employee") Employee employee) {
-		List<Employee> list = employeeRepository.findAll();
-		for(Employee x: list) {
-			if(x.hashCode()==employee.hashCode()) {
-				return "newEmployee";  
+		List<Employee> listEmployee = employeeRepository.findAll();
+		for(Employee e: listEmployee) {
+			if(e.getId()!=employee.getId() && e.hashCode()==employee.hashCode()) {
+				return "redirect:/newEmployee";
 			}
 		}
 		employeeRepository.save(employee);
 		return "redirect:/employees";		
 	}
 	
-	@PutMapping("employees/editEmployee/{id}")
+	@GetMapping("/employees/editEmployee/{id}")
 	public String editEmployee(@PathVariable("id") long id, Model model) {
 		Optional<Employee> employeeOpt = employeeRepository.findById(id);
+		List<Recipe> listRecipe = recipeRepository.findAll();
+		List<Employee> listEmployees = employeeRepository.findAll();
+		List<Recipe> usedRecipes = new ArrayList<>();
+		for(Recipe recipe: listRecipe) {
+			for(Employee e: listEmployees) {
+				if(e.getRecipe()==recipe) {
+					usedRecipes.add(recipe);
+					if(e.hashCode()==employeeOpt.hashCode()) {
+						usedRecipes.remove(recipe);
+					}
+				}
+			}			
+		}
+		List<Recipe> notUsedRecipes= listRecipe;
+		notUsedRecipes.removeAll(usedRecipes);
+		model.addAttribute("notUsedRecipes", notUsedRecipes);
 		model.addAttribute("employee", employeeOpt.get());
 		return "newEmployee";
 	}
+	
 	
 	@GetMapping("employees/deleteEmployee/{id}")
 	public String deleteEmployee(@PathVariable("id") long id) {
 		Employee employee = employeeRepository.findById(id).get();
 		employeeRepository.delete(employee);
 		return "redirect:/employees";
-	}
-	
-	@GetMapping("employees/addRecipe/{id}")
-	public String addRecipe(@PathVariable("id") long id, Model model) {
-		List<Recipe> listRecipe = recipeRepository.findAll();
-		model.addAttribute("listRecipe", listRecipe);
-		Employee employee = employeeRepository.findById(id).get();
-		model.addAttribute("employee", employee);
-		return "addRecipe";
-	}
-	
-	@PutMapping("employees/addRecipe/{id}/save")
-	public String saveRecipeEmployee(@PathVariable ("id") Long id, Model model, @ModelAttribute ("recipe") Recipe recipe) {
-		Employee employee = employeeRepository.findById(id).get();
-		recipe = recipeRepository.findById(id).get();
-		employee.setRecipe(recipe);
-		recipe.setEmployee(employee);
-		employeeRepository.save(employee);
-		recipeRepository.save(recipe);
-		return "employees";
 	}
 
 }
