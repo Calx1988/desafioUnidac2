@@ -26,8 +26,10 @@ public class Instantiation implements CommandLineRunner{
 		Employee e1 = new Employee(null, "Cássio Alexsander", "12345");
 		Employee e2 = new Employee(null, "Allana Caroline", "23456");
 		Employee e3 = new Employee(null, "Karla Luana", "34567");
+		Employee e4 = new Employee(null, "Karla Luana", "45678");
 
-		employeeRepository.saveAll(Arrays.asList(e1,e2,e3));
+
+		employeeRepository.saveAll(Arrays.asList(e1,e2,e3,e4));
 		
 		Recipe r1 = new Recipe(null, "Nega Maluca");
 		Recipe r2 = new Recipe(null, "Torta de Morango");
