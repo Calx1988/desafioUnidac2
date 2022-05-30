@@ -22,10 +22,10 @@ public class Instantiation implements CommandLineRunner{
 
 	public void run(String... args) throws Exception {
 		
-		Employee e1 = new Employee(null, "Cássio Alexsander", "12345678901");
-		Employee e2 = new Employee(null, "Allana Caroline", "13579135791");
-		Employee e3 = new Employee(null, "Karoline Branicki", "09876543210");
-		Employee e4 = new Employee(null, "Karla Luana", "24680246802");
+		Employee e1 = new Employee(null, "Cássio Alexsander", "46104589006");
+		Employee e2 = new Employee(null, "Allana Caroline", "75363798034");
+		Employee e3 = new Employee(null, "Karoline Branicki", "50969001002");
+		Employee e4 = new Employee(null, "Karla Luana", "72218160005");
 
 
 		employeeRepository.saveAll(Arrays.asList(e1,e2,e3,e4));

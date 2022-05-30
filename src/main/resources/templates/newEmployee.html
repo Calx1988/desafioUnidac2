@@ -19,6 +19,7 @@
 			<input type="text" th:field="*{name}" placeholder="Nome" class="form-control mb-4 col-4">
 			<span th:if="${#fields.hasErrors('cpf')}" th:errors="*{cpf}" class="text-danger"></span>
 			<span th:if="${cpfAlreadyExists}" class="text-danger">Erro! CPF já cadastrado</span>
+			<span th:if="${cpfInvalid}" class="text-danger">Erro! CPF não é válido.</span>
       		<input type="number" th:field="*{cpf}" placeholder="CPF" class="form-control mb-4 col-4">
       		<select th:field="*{recipe}" class="form-control">
 			    <option value="0">Selecione/Remova o lanche</option>
