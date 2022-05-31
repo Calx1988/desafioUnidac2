@@ -1,6 +1,7 @@
 package desafio_unidac_sb.resources;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -112,10 +113,11 @@ public class EmployeeResource {
 		char secondDigitChar = employee.getCpf().charAt(10);
 		int firstDigit = Character.getNumericValue(firstDigitChar);
 		int secondDigit = Character.getNumericValue(secondDigitChar);
+	
 		int sumFirstDigit = 0;
 		int sumSecondDigit = 0;
-		int y = 10;
 		
+		int y = 10;
 		for(int x=0; x<9; x++) {
 			char charDigit = employee.getCpf().charAt(x);
 			sumFirstDigit += Character.getNumericValue(charDigit) * y;
@@ -145,8 +147,32 @@ public class EmployeeResource {
 			supposedSecondDigit = 11 - (sumSecondDigit%11);
 		}
 		
+		List<String> listInvalidCpf= new ArrayList<String>();
+		listInvalidCpf.addAll(Arrays.asList("11111111111", 
+				"22222222222", 
+				"33333333333", 
+				"44444444444", 
+				"55555555555", 
+				"66666666666",
+				"77777777777",
+				"88888888888",
+				"99999999999",
+				"00000000000"));
+		
+		boolean test = false;
+		boolean cpfInvalid = false;
+		for(String s: listInvalidCpf) {
+			if(employee.getCpf().contentEquals(s)) {
+				cpfInvalid=true;
+			}
+		}
+			
+		
 		if(supposedFirstDigit != firstDigit || supposedSecondDigit != secondDigit) {
-			boolean cpfInvalid = true;
+			cpfInvalid = true;
+		}
+		
+		if(cpfInvalid) {
 			model.addAttribute("cpfInvalid", cpfInvalid);
 			List<Recipe> listRecipe = recipeRepository.findAll();
 			List<Employee> listEmployees = employeeRepository.findAll();
@@ -164,7 +190,7 @@ public class EmployeeResource {
 			return "newEmployee";
 		}
 		//fim validação cpf
-		
+		System.out.println(cpfInvalid);
 		employeeRepository.save(employee);
 		return "redirect:/employees";		
 	}
