@@ -9,6 +9,7 @@ import javax.transaction.Transactional;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -16,7 +17,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-
 
 import desafio_unidac_sb.entities.Employee;
 import desafio_unidac_sb.entities.Recipe;
@@ -41,6 +41,24 @@ public class EmployeeResource {
 	public Employee findById(Long id) {
 		Employee employee = employeeRepository.findById(id).get();
 		return employee;
+	}
+	
+	@GetMapping(value="/findByName")
+	public String findByName(Model model, @Param ("nameEmployee") String nameEmployee) {
+		System.out.println(nameEmployee);
+		if(nameEmployee==null) {
+			model.addAttribute("listEmployees", employeeRepository.findAll());
+			return "employees";
+		}
+		model.addAttribute("listEmployees", employeeRepository.findByName(nameEmployee));
+		return "employees";
+	}
+	
+	
+	@GetMapping(value="/findByCpf")
+	public String findByCpf(Model model, @Param("cpfEmployee") String cpfEmployee) {
+		model.addAttribute("listEmployees", employeeRepository.findByCpf(cpfEmployee));
+		return "employees";
 	}
 	
 	@GetMapping(value = "/employees")
